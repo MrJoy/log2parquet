@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/csv"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -12,12 +13,20 @@ import (
 	"github.com/xitongsys/parquet-go/writer"
 )
 
+// Version - Git SHA of the build, provided at link-time.
+var Version = "0000000"
+
+// BuildDate - The timestamp for the binary in %Y-%m-%dT%H:%M:%S%z format, provided at link-time.
+var BuildDate = "0000-00-00T00:00:00z"
+
 type Shoe struct {
 	ShoeBrand string `parquet:"name=shoe_brand, type=UTF8"`
 	ShoeName  string `parquet:"name=shoe_name, type=UTF8"`
 }
 
 func main() {
+	fmt.Printf("log2parquet v.%s, %s\n", Version, BuildDate)
+
 	var err error
 
 	fw, err := local.NewLocalFileWriter("output/shoes.parquet")
